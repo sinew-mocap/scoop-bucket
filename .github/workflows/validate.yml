@@ -26,15 +26,15 @@ jobs:
             try {
               $m = $raw | ConvertFrom-Json
             } catch {
-              Write-Host "ERR $name: invalid JSON - $($_.Exception.Message)"; $bad++; return
+              Write-Host "ERR ${name}: invalid JSON - $($_.Exception.Message)"; $bad++; return
             }
             try {
               if (-not (Test-Json -Json $raw -Schema $schema -ErrorAction Stop)) { throw "does not match the scoop schema" }
             } catch {
-              Write-Host "ERR $name: schema - $($_.Exception.Message)"; $bad++; return
+              Write-Host "ERR ${name}: schema - $($_.Exception.Message)"; $bad++; return
             }
             foreach ($field in 'version', 'description', 'homepage', 'license') {
-              if (-not $m.$field) { Write-Host "ERR $name: missing required field: $field"; $bad++; return }
+              if (-not $m.$field) { Write-Host "ERR ${name}: missing required field: $field"; $bad++; return }
             }
             Write-Host "ok  $name"
           }
