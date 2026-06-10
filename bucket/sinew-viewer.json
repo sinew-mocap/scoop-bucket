@@ -1,12 +1,12 @@
 {
-    "version": "0.4.0",
-    "description": "Sinew ANNY body viewer — a live polyscope GUI driven by /sinew and /vr OSC.",
+    "version": "0.4.1",
+    "description": "Sinew ANNY body viewer \u2014 a live polyscope GUI driven by /sinew and /vr OSC.",
     "homepage": "https://github.com/sinew-mocap/viewer",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/sinew-mocap/viewer/releases/download/v0.4.0/sinew-viewer-windows-x64.zip",
-            "hash": "17d4ef57a9e31130ee31806de622f5dddb32e4475110143704f7d966b4d70551"
+            "url": "https://github.com/sinew-mocap/viewer/releases/download/v0.4.1/sinew-viewer-windows-x64.zip",
+            "hash": "7226988ed4b65212f6845d10d814b55595d238609a004093cc9a307d2dac366c"
         }
     },
     "bin": "anny_demo.exe",
