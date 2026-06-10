@@ -13,20 +13,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate manifest JSON
+      - name: Lint manifests (scoop schema + required fields)
         shell: pwsh
         run: |
+          $schema = (Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/schema.json').Content
           $bad = 0
+          $n = 0
           Get-ChildItem bucket -Filter *.json | ForEach-Object {
+            $n++
+            $name = $_.Name
+            $raw = Get-Content $_.FullName -Raw
             try {
-              $m = Get-Content $_.FullName -Raw | ConvertFrom-Json
-              foreach ($field in 'version','description','homepage','license') {
-                if (-not $m.$field) { throw "missing required field: $field" }
-              }
-              Write-Host "ok  $($_.Name)"
+              $m = $raw | ConvertFrom-Json
             } catch {
-              Write-Host "ERR $($_.Name): $_"
-              $bad++
+              Write-Host "ERR ${name}: invalid JSON - $($_.Exception.Message)"; $bad++; return
             }
+            try {
+              if (-not (Test-Json -Json $raw -Schema $schema -ErrorAction Stop)) { throw "does not match the scoop schema" }
+            } catch {
+              Write-Host "ERR ${name}: schema - $($_.Exception.Message)"; $bad++; return
+            }
+            foreach ($field in 'version', 'description', 'homepage', 'license') {
+              if (-not $m.$field) { Write-Host "ERR ${name}: missing required field: $field"; $bad++; return }
+            }
+            Write-Host "ok  $name"
           }
+          Write-Host "$n manifest(s) linted"
           if ($bad -gt 0) { exit 1 }
