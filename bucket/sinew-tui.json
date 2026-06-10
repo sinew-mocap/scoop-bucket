@@ -1,0 +1,23 @@
+{
+    "version": "0.4.0",
+    "description": "Slim Sinew driver — reads the rebocap dongle and emits the /sinew OSC protocol with a terminal monitor.",
+    "homepage": "https://github.com/sinew-mocap/driver",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/sinew-mocap/driver/releases/download/v0.4.0/sinew_tui.exe",
+            "hash": "bdc78c8b4f1b323888cfd24bc152d2f8a8f9271302c0e64f9c5d4af3d0645386"
+        }
+    },
+    "bin": "sinew_tui.exe",
+    "checkver": {
+        "github": "https://github.com/sinew-mocap/driver"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/sinew-mocap/driver/releases/download/v$version/sinew_tui.exe"
+            }
+        }
+    }
+}
