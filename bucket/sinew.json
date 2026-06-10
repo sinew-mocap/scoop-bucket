@@ -1,0 +1,11 @@
+{
+    "version": "0.4.1",
+    "description": "Sinew mocap starter pack — installs every Sinew app (driver, VR bridge, viewer) in one command.",
+    "homepage": "https://github.com/sinew-mocap",
+    "license": "MIT",
+    "depends": [
+        "sinew/sinew-tui",
+        "sinew/sinew-viewer",
+        "sinew/sinew-vr-bridge"
+    ]
+}
