@@ -1,0 +1,32 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+jobs:
+  manifests:
+    name: validate manifests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest JSON
+        shell: pwsh
+        run: |
+          $bad = 0
+          Get-ChildItem bucket -Filter *.json | ForEach-Object {
+            try {
+              $m = Get-Content $_.FullName -Raw | ConvertFrom-Json
+              foreach ($field in 'version','description','homepage','license') {
+                if (-not $m.$field) { throw "missing required field: $field" }
+              }
+              Write-Host "ok  $($_.Name)"
+            } catch {
+              Write-Host "ERR $($_.Name): $_"
+              $bad++
+            }
+          }
+          if ($bad -gt 0) { exit 1 }
