@@ -8,6 +8,8 @@
     "depends": [
         "sinew/sinew-tui",
         "sinew/sinew-viewer",
-        "sinew/sinew-vr-bridge"
+        "sinew/sinew-vr-bridge",
+        "extras/blender",
+        "sinew/sinew-blender-addons"
     ]
 }
